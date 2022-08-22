@@ -1,0 +1,49 @@
+{% extends "base.html"%}
+{% load static %}
+
+{% block title %}
+ My Blog
+{% endblock %} 
+
+
+{% block css_files %}
+ <link rel="stylesheet" href="{% static "blog/post.css" %}" />
+ <link rel="stylesheet" href="{% static "blog/index.css" %}" />
+
+
+{% endblock %}
+{% block content %}
+ <header id="main-navigation">
+    <h1><a href="{% url "starting-page" %}">Venkatesh's Blog</a></h1>
+    <nav>
+        <a href="{% url "posts-page" %}">All Posts</a>
+        <a href="{% url "register" %}">Register</a>
+        <a href="{% url "LogIn" %}">LogIn</a>
+    </nav>
+ </header>   
+ <section id="welcome">
+    <header>
+        <img src="https://lh3.googleusercontent.com/vs9PHXnO9jte8eKhOzC4yIfr9BP3xChTOAx8yglRdZrJmJSefVJTzkUmnSxzodfWhMaWuMa8zBhK-P8K5qNAigu6FzQROeLa2AImMM4LOJMxGI4zOySkJzqfD5yN0shIjd8lAb-xbI5TmO5imIBhqvq25rFjbTRLtbiedLds0Jj3CyxbkiyRxuL6zoBk5y74F-rWxTQ1DWK2CO3FDsdMK-NYvjlQHxWCUpPAyTUyfZ0VOSIN7JyAoqGjvT2lkJfBbVxstjD4CFKq6rvrnYJHiAg24lW_W_eClqc0P9bJx9IQm4-2HjV95yRzP7TMK0CaBjMgxu5y4Yq3PXA5PNl7a3wncU6MHO_DUqYw6crKu8BXaDdpXcifH7Gxq54eoe4YWDEgbnTfIdPl7wiExOJGnqx4r7yq9hOXww05zBY3PNStgCcEfOhNAZT6dWObDSqiP5DDWZrBpTZPzZDcHeRJ51ovj-z2cN4ocSL6sQHLelIq1xhnOpGk-EXmNhvrfJWhHA3-i4aWBXu4jSJS-yeJkwWscjFAvF7SP1-j4MZxxsBFcAo5hppVbHuFn_Ri4IQPI39b3_oiz3pObStTjqKnrlnRNie2YdMInvv49Cnd5F7p6CC4an4AruyAmbg2ayP3PR66e7MKGaGF7mE_FzmNDCgu1YXgdPOfzQxJHBpgOTpGjBVHTShkwyyeOMS-SumIAdvonhmNUZ3bTHFeJQllVc_9l2cclf3427L5YT9QZzFDDUlq5cs7S2qBOigbW3grPg8UFJJN0NozfsJruB8mkAY9PsgfTIpSQA=w366-h437-no?authuser=0" alt="Venkatesh - The Author of this Blog"/>
+        <h2> VENKATESH'S BLOG </h2>
+    </header>   
+    <p> Hi, I like to blog about tech! </p>
+ </section>  
+ 
+  <section id="latest-posts">
+    <h2>My latest Thoughts</h2>
+
+    <ul>
+        {% for post in posts %}
+        {% include "blog/includes/post.html" %}
+        {% endfor %}
+    </ul>
+
+  </section>  
+
+  <section id="about">
+    <h2>What I Do</h2>
+    <p>I love programming and I enjoy explore new technologies.</p>
+    <p>My Goal is to keep growing as a Python Developer.</p>
+
+  </section>  
+{% endblock %} 

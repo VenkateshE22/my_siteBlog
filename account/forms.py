@@ -1,3 +1,4 @@
+from operator import attrgetter
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Account
@@ -10,8 +11,13 @@ class NewUserForm(UserCreationForm):
 	class Meta:
 		model = Account
 		fields = ("username", "email", "phonenumber", "is_author", "is_staff", "password1", "password2",)
-		#fields= '__all__'
-		#exclude=['is_staff','is_active','is_superuser']
+		widgets={
+			"username":forms.TextInput(attrs={'class':'form-control'}),
+			"email":forms.TextInput(attrs={'class':'form-control'}),
+			"phonenumber":forms.NumberInput(attrs={'class':'form-control'}),
+			"password1":forms.TextInput(attrs={'class':'form-control'}),
+			"password2":forms.TextInput(attrs={'class':'form-control'}),
+		}
 
 	def save(self, commit=True):
 		user = super(NewUserForm, self).save(commit=False)

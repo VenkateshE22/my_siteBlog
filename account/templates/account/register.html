@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+{% load crispy_forms_tags %}         
+
+<div class="container py-5">
+	
+	<h1>Register</h1>
+	<form method="POST">
+		Author<input type="radio" name="usertype" value="Author" required>                    
+		Admin<input type="radio" name="usertype" value="Admin" required>                    
+		Reader<input type="radio" name="usertype" value="Reader" required>                    
+		{% csrf_token %}
+		{{ register_form|crispy }}
+		<button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	
+</div>
+
+{% endblock %}

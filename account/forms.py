@@ -1,7 +1,7 @@
 from operator import attrgetter
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account
+from django.contrib.auth.models import User
 
 
 
@@ -9,12 +9,14 @@ class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
 
 	class Meta:
-		model = Account
-		fields = ("username", "email", "phonenumber", "is_author", "is_staff", "password1", "password2",)
+		model = User
+		fields = ("username", "first_name", "last_name", "email", "password1", "password2",)
 		widgets={
 			"username":forms.TextInput(attrs={'class':'form-control'}),
+			"first_name":forms.TextInput(attrs={'class':'form-control'}),
+			"last_name":forms.TextInput(attrs={'class':'form-control'}),
 			"email":forms.TextInput(attrs={'class':'form-control'}),
-			"phonenumber":forms.NumberInput(attrs={'class':'form-control'}),
+			#"phonenumber":forms.NumberInput(attrs={'class':'form-control'}),
 			"password1":forms.TextInput(attrs={'class':'form-control'}),
 			"password2":forms.TextInput(attrs={'class':'form-control'}),
 		}

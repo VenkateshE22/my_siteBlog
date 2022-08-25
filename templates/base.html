@@ -12,16 +12,49 @@
     {% block css_files %}{% endblock %}
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      
+      <a class="navbar-brand" href="{% url "starting-page" %}">Venkatesh's Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "posts-page" %}">All Post</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "logout" %}">logout</a>
+          </li>
+          {% if user.is_author %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "upload" %}">Upload File</a>
+          </li>
+          {% endif %}
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "register" %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "logIn" %}">logIn</a>
+          </li>
+          {% endif %}
+      </div>
+    </div>
+  </nav>
 
-    <header id="main-navigation">
-        <h1><a href="{% url "starting-page" %}">Venkatesh's Blog</a></h1>
-        <nav>
-            
-        </nav>
-     </header> 
-    {% block content %}
-    {% endblock %}
- 
-    
+     {% for i in messages %}
+     <p class="alert alert-{{ i.tags }}">{{i}}</p>
+     {% endfor %}
+
+     
+     
+     {% block content %}
+     {% endblock %}
 </body>
 </html>

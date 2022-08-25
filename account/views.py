@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import login,authenticate
+from django.contrib.auth.models import auth
 from .forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm
-from blog.models import Author
-from django.contrib.auth.models import User
+#from blog.models import Author
+# from django.contrib.auth.models import User
+from .models import User
 
 # Create your views here.
 
@@ -17,12 +19,12 @@ def register_request(request):
 		
 		if form.is_valid():
 			user = form.save()
-			login(request, user)
+			# login(request, user)
 			messages.success(request, "Registration successful." )
 			
 			if usertype=='Author':
-				author=Author(user_key=user)
-				author.save()
+				user.is_author=True
+				user.save()
 			elif usertype=='Admin':
 				user.is_staff=True
 				user.is_superuser=True
@@ -50,3 +52,9 @@ def login_request(request):
 			messages.error(request,"Invalid username or password.")
 	form = AuthenticationForm()
 	return render(request=request, template_name="account/login.html", context={"login_form":form})    
+
+def logout(request):
+	if request.user.is_authenticated:
+		auth.logout(request)
+		return redirect('logIn')
+	return redirect('/')

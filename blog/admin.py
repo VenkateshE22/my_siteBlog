@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Post, Author
+from .models import Post
 # Register your models here.
 
-class PostAdmin(admin.ModelAdmin):
-    list_filter = ("author", "date")
-    list_display = ("title", "date", "author")
+#class PostAdmin(admin.ModelAdmin):
+    #list_filter = ("author", "date")
+    #list_display = ("title", "date", "author")
 
-admin.site.register(Post, PostAdmin)
-admin.site.register(Author)
+admin.site.register(Post) #PostAdmin)
+#admin.site.register(Author)
 

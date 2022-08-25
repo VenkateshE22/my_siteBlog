@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post,Author
+from .models import Post
 from .forms import UploadDataForm
+from account.models import User
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -29,16 +32,20 @@ def upload(request):
         title=request.POST['title']
         content=request.POST['content']
         excerpt=request.POST['excerpt']
-        author_obj=Author.objects.get(user_key=request.user)
-        post_obj=Post(title=title,excerpt=excerpt,content=content,author=author_obj)
-        post_obj.save()
-        if request.FILES:
-            post_obj=Post.objects.get(title=title)
-            image=request.FILES['image']
-            post_obj.image=image
+        #author_obj=Author.objects.get(user_key=request.user)
+        user_obj=User.objects.get(username=request.user.username)
+        if user_obj.is_author:
+            post_obj=Post(title=title,excerpt=excerpt,content=content,author=user_obj)
             post_obj.save()
+            if request.FILES:
+                post_obj=Post.objects.get(title=title)
+                image=request.FILES['image']
+                post_obj.image=image
+                post_obj.save()
 
-        return redirect("/")  
+            return redirect("/")
+        messages.warning(request,"You are not an author, sorry you can not post.")
+        return redirect("/")      
         
     form=UploadDataForm()
     context['form'] = form

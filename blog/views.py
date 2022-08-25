@@ -13,12 +13,17 @@ def index(request):
 
 
 def starting_page(request):
-    latest_posts = Post.objects.all().order_by("date")[:3]
+    latest_posts = Post.objects.filter(status='P').order_by("date")[:3]
     return render(request, "blog/index.html", {"posts":latest_posts})
 
 def posts(request):
-    all_posts = Post.objects.all().order_by("-date")
+    all_posts = Post.objects.filter(status='P').order_by("-date")
     return render(request, "blog/all-posts.html", {"all_posts":all_posts})
+
+def dashboard(request):
+    draft_post = Post.objects.filter(status='D',author=request.user).order_by("-date")
+    published_posts = Post.objects.filter(status='P',author=request.user).order_by("-date")
+    return render(request, "blog/draft_posts.html", {"draft_post":draft_post,"published_post":published_posts})
 
 def post_detail(request, slug):
 
@@ -35,14 +40,22 @@ def upload(request):
         #author_obj=Author.objects.get(user_key=request.user)
         user_obj=User.objects.get(username=request.user.username)
         if user_obj.is_author:
-            post_obj=Post(title=title,excerpt=excerpt,content=content,author=user_obj)
-            post_obj.save()
-            if request.FILES:
-                post_obj=Post.objects.get(title=title)
-                image=request.FILES['image']
-                post_obj.image=image
+            if request.POST['status']=='P':
+                post_obj=Post(title=title,excerpt=excerpt,content=content,author=user_obj,status='P')
                 post_obj.save()
-
+                if request.FILES:
+                    post_obj=Post.objects.get(title=title)
+                    image=request.FILES['image']
+                    post_obj.image=image
+                    post_obj.save()
+            else:
+                post_obj=Post(title=title,excerpt=excerpt,content=content,author=user_obj,status='D')
+                post_obj.save()
+                if request.FILES:
+                    post_obj=Post.objects.get(title=title)
+                    image=request.FILES['image']
+                    post_obj.image=image
+                    post_obj.save()
             return redirect("/")
         messages.warning(request,"You are not an author, sorry you can not post.")
         return redirect("/")      

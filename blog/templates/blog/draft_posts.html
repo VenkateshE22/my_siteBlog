@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Here is the list of Drafts.
+{% endblock %}
+
+{% block css_files %}
+ {% comment %} <link rel="stylesheet" href="{% static 'blog/post.css' %}" /> {% endcomment %}
+ {% comment %} <link rel="stylesheet" href="{% static 'blog/all-posts.css' %}"> {% endcomment %}
+{% endblock %} 
+{% block content %}
+<section id="draft_posts" class="d-flex flex-column justify-content-center align-items-center">
+        <div class="post pb-4">
+            <h1>My Published Posts</h1>
+            <ul class="row g-0 justify-content-center align-items-center">
+                {% for post in published_post %}
+                {% include "blog/includes/post.html" %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="post pb-4">
+            <h1>My Drafts</h1>
+            <ul class="row g-0 justify-content-center align-items-center">
+                {% for post in draft_post %}
+                {% include "blog/includes/post.html" %}
+                {% endfor %}
+            </ul>
+        </div>
+</section>
+
+{% endblock %}

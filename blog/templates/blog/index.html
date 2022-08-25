@@ -7,7 +7,7 @@
 
 
 {% block css_files %}
- <link rel="stylesheet" href="{% static "blog/post.css" %}" />
+ {% comment %} <link rel="stylesheet" href="{% static "blog/post.css" %}" /> {% endcomment %}
  <link rel="stylesheet" href="{% static "blog/index.css" %}" />
 
 
@@ -22,7 +22,7 @@
     <p> Hi, I like to blog about tech! </p>
  </section>  
  
-  <section id="latest-posts">
+  <section id="latest-posts" class="post">
     <h2>My latest Thoughts</h2>
 
     <ul>

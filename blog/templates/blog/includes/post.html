@@ -1,14 +1,13 @@
 
 
-<li>
+<li class="col-4 border flex justify-content-center align-items-center" style="height: 17rem;">
     <article class="post">
         <a href="{% url "post-detail-page" post.slug %}">
             <img src="{{ post.image.url }}" alt="{{ post.title }}"/>
             <div class="post__content">
                 <h3>{{ post.title }}</h3>
-                <p>{{post.excerpt }}</p>
+                <p>{{post.excerpt|slice:"0:120" }}</p>
             </div>    
         </a>
     </article>        
-
 </li>

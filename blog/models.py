@@ -4,6 +4,7 @@ from account.models import User
 
 from autoslug import AutoSlugField
 
+choices = [('D','Draft'),('P','Published')]
 #class Author(models.Model):
     #user_key=models.ForeignKey(User,on_delete=models.CASCADE)
 
@@ -17,5 +18,5 @@ class Post(models.Model):
     date = models.DateField(auto_now=True)
     slug = AutoSlugField(populate_from='title', unique=True)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    author = models.ForeignKey(User, on_delete=models.CASCADE)    
+    status=models.CharField(max_length=2,choices=choices,null=True)

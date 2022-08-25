@@ -7,14 +7,14 @@ All My Posts
 
 {% block css_files %}
  <link rel="stylesheet" href="{% static "blog/post.css" %}" />
- <link rel="stylesheet" href="{% static "blog/all-posts.css" %}">
+ {% comment %} <link rel="stylesheet" href="{% static "blog/all-posts.css" %}"> {% endcomment %}
 {% endblock %} 
 
 {% block content %}
-<section id="all-posts">
+<section id="all-posts" class="post">
     <h2>My Collected Posts</h2>
 
-    <ul>
+    <ul class="row g-0 align-items-center justify-content-center">
         {% for post in all_posts %}
          {% include "blog/includes/post.html" %}
         {% endfor %}

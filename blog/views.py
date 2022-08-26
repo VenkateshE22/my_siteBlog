@@ -1,9 +1,10 @@
+from multiprocessing import context
+from re import template
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
-from .forms import UploadDataForm
+from .models import Post, Category
+from .forms import UploadDataForm,catagoryForm,UpdateDataForm
 from account.models import User
 from django.contrib import messages
-
 
 
 # Create your views here.
@@ -64,3 +65,63 @@ def upload(request):
     context['form'] = form
     
     return render (request,"blog/upload.html", context)
+
+def category_view(request):
+    context ={}
+    if request.method == "POST":
+        name=request.POST['name']
+        description=request.POST['description']
+        if request.user.is_author:
+            post_obj1 = Category(name=name, description=description)
+            post_obj1.save()
+            return redirect('/')
+    return render(request, "blog/add_category.html",{'form':catagoryForm})
+
+def update_blog(request,slug):
+    context = {}
+    if request.method == "POST":
+        title=request.POST['title']
+        content=request.POST['content']
+        excerpt=request.POST['excerpt']
+        status = request.POST['status']
+        category=request.POST['category']
+        if request.user.is_author:
+            post_obj=Post.objects.get(slug=slug)
+            if title:
+                post_obj.title=title
+            if content:
+                post_obj.content=content
+                
+            if excerpt:
+                post_obj.excerpt=excerpt
+            if status:
+                post_obj.status=status
+            if category:
+                cat_object=Category.objects.get(id=int(category))
+                post_obj.category=cat_object
+              
+
+            if request.FILES:
+                    
+                image=request.FILES['image']
+                if image:
+                    post_obj.image=image
+
+            post_obj.save()
+            # post_obj2 = Post(title=title, content=content, excerpt=excerpt)
+            # post_obj2.save()
+            return redirect('/')
+    form1 = UpdateDataForm()        
+    post_obj=Post.objects.get(slug=slug)
+    return render(request, "blog/update_blog.html",{'form': form1,"post_obj":post_obj})        
+
+
+def delete_blog(request, slug):
+    post_obj=Post.objects.get(slug=slug)
+    if request.user.username == post_obj.author.username:
+        post_obj.delete()
+        messages.success(request,"blog deleted")
+        return redirect('my-posts')
+    messages.warning(request,'you can not delete other peoples blog')
+    return redirect('my-posts')
+

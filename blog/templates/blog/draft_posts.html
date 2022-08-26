@@ -13,11 +13,13 @@ Here is the list of Drafts.
 <section id="draft_posts" class="d-flex flex-column justify-content-center align-items-center">
         <div class="post pb-4">
             <h1>My Published Posts</h1>
-            <ul class="row g-0 justify-content-center align-items-center">
-                {% for post in published_post %}
-                {% include "blog/includes/post.html" %}
-                {% endfor %}
-            </ul>
+            <div class="d-flex ">
+                <ul class="row g-0 justify-content-center align-items-center">
+                    {% for post in published_post %}
+                        {% include "blog/includes/post.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         <div class="post pb-4">
             <h1>My Drafts</h1>

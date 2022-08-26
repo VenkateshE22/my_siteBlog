@@ -1,6 +1,6 @@
 
 
-<li class="col-3 mx-3 border flex my-4 justify-content-center align-items-center" style="height: 17rem;">
+<li class="col-3 mx-3 border flex my-4 justify-content-center align-items-center" style="width: 18rem;">
     <article class="post">
         <a href="{% url "post-detail-page" post.slug %}">
             <img src="{{ post.image.url }}" alt="{{ post.title }}"/>
@@ -9,5 +9,12 @@
                 <p>{{post.excerpt|slice:"0:120" }}</p>
             </div>    
         </a>
-    </article>        
+        <div class="d-flex gap-2">
+            {% if user.username == post.author.username %}
+                    <a href="{% url 'update_blog' post.slug %}"><button class="btn btn-primary" type="submit">Update</button></a>
+                    <a href="{% url 'delete_blog' post.slug %}"><button class="btn btn-primary" type="submit">Delete</button></a>
+            {% endif %}
+        </div>
+    </article>  
+
 </li>

@@ -7,21 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0004_remove_post_tags'),
+        ("blog", "0004_remove_post_tags"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Tag',
+            name="Tag",
         ),
         migrations.AlterField(
-            model_name='post',
-            name='slug',
-            field=autoslug.fields.AutoSlugField(editable=False, populate_from='title', unique=True),
+            model_name="post",
+            name="slug",
+            field=autoslug.fields.AutoSlugField(
+                editable=False, populate_from="title", unique=True
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='title',
+            model_name="post",
+            name="title",
             field=models.CharField(max_length=150, unique=True),
         ),
     ]
